@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAM IA — Travaille en ligne depuis l'Afrique</title>
+<style>
+:root {
+  --bg: #070d1a;
+  --bg2: #0f1829;
+  --card: #141f33;
+  --border: #1e2d47;
+  --accent: #00e5a0;
+  --accent2: #00b8ff;
+  --accent3: #7c6cf8;
+  --text: #e2eaf5;
+  --muted: #6b7f9e;
+  --warn: #f59e0b;
+  --danger: #ef4444;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; min-height:100vh; }
+
+nav { background:var(--bg2); border-bottom:1px solid var(--border); padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
+.logo { font-size:1.5rem; font-weight:800; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; letter-spacing:-1px; }
+.nav-links { display:flex; gap:1.5rem; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:0.9rem; transition:color .2s; }
+.nav-links a:hover { color:var(--accent); }
+.status-dot { width:8px; height:8px; background:var(--accent); border-radius:50%; display:inline-block; animation:pulse 2s infinite; margin-right:6px; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+.hero { text-align:center; padding:5rem 2rem 3rem; }
+.hero h1 { font-size:clamp(2rem,6vw,4rem); font-weight:800; letter-spacing:-2px; margin-bottom:1rem; }
+.hero h1 span { background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.hero p { color:var(--muted); font-size:1.1rem; max-width:550px; margin:0 auto 2rem; line-height:1.6; }
+.hero-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+.btn { padding:.75rem 1.75rem; border-radius:50px; font-weight:600; font-size:.95rem; cursor:pointer; transition:all .2s; border:none; text-decoration:none; display:inline-block; }
+.btn-primary { background:var(--accent); color:#070d1a; }
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,229,160,.3); }
+.btn-outline { background:transparent; color:var(--text); border:1px solid var(--border); }
+.btn-outline:hover { border-color:var(--accent2); color:var(--accent2); }
+
+.stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; max-width:900px; margin:0 auto 4rem; padding:0 2rem; }
+.stat-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.5rem; text-align:center; }
+.stat-card .num { font-size:2rem; font-weight:800; color:var(--accent); margin-bottom:.25rem; }
+.stat-card .label { color:var(--muted); font-size:.85rem; }
+
+.section { max-width:1000px; margin:0 auto; padding:0 2rem 4rem; }
+.section-title { font-size:1.5rem; font-weight:700; margin-bottom:1.5rem; display:flex; align-items:center; gap:.5rem; }
+.section-title::before { content:''; width:4px; height:1.5rem; background:var(--accent); border-radius:2px; }
+
+.missions-grid { display:grid; gap:1rem; }
+.mission-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1.25rem; display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; transition:border-color .2s; }
+.mission-card:hover { border-color:var(--accent2); }
+.mission-info h3 { font-size:1rem; font-weight:600; margin-bottom:.4rem; }
+.mission-info p { color:var(--muted); font-size:.85rem; line-height:1.5; }
+.mission-meta { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.6rem; }
+.tag { padding:.25rem .65rem; border-radius:20px; font-size:.75rem; font-weight:500; }
+.tag-platform { background:#0f2040; color:var(--accent2); }
+.tag-pay { background:#0f2a1a; color:var(--accent); }
+.tag-lang { background:#1a1540; color:var(--accent3); }
+.score-badge { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:.75rem 1rem; text-align:center; min-width:70px; }
+.score-badge .score { font-size:1.4rem; font-weight:800; color:var(--accent); }
+.score-badge .slabel { font-size:.7rem; color:var(--muted); }
+
+.inscription-form { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:2rem; max-width:600px; margin:0 auto; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.form-group { margin-bottom:1.25rem; }
+.form-group label { display:block; font-size:.85rem; color:var(--muted); margin-bottom:.4rem; }
+.form-group input, .form-group select { width:100%; background:#0a1020; border:1px solid var(--border); color:var(--text); padding:.7rem 1rem; border-radius:10px; font-size:.9rem; transition:border-color .2s; outline:none; }
+.form-group input:focus, .form-group select:focus { border-color:var(--accent2); }
+.form-group select option { background:#0a1020; }
+.success-msg { background:#0a2010; border:1px solid #0f5030; border-radius:10px; padding:1rem; color:var(--accent); font-size:.9rem; margin-top:1rem; display:none; }
+
+.retrait-section { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1rem; }
+.retrait-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1.5rem; }
+.retrait-card h3 { font-size:1rem; font-weight:600; margin-bottom:.5rem; }
+.retrait-card .meta { display:flex; gap:1rem; margin-bottom:1rem; }
+.retrait-card .meta span { font-size:.8rem; color:var(--muted); }
+.retrait-card .meta strong { color:var(--accent); }
+.steps { list-style:none; }
+.steps li { font-size:.83rem; color:var(--muted); padding:.4rem 0; border-bottom:1px solid var(--border); padding-left:1.25rem; position:relative; line-height:1.5; }
+.steps li:last-child { border-bottom:none; }
+.steps li::before { content:attr(data-n); position:absolute; left:0; color:var(--accent2); font-weight:700; font-size:.75rem; }
+
+.loading { text-align:center; padding:2rem; color:var(--muted); }
+.spinner { width:28px; height:28px; border:2px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .8s linear infinite; margin:0 auto 1rem; }
+@keyframes spin { to{transform:rotate(360deg)} }
+
+footer { text-align:center; padding:2rem; border-top:1px solid var(--border); color:var(--muted); font-size:.85rem; }
+footer strong { color:var(--accent); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">SAM</div>
+  <div class="nav-links">
+    <a href="#missions">Missions</a>
+    <a href="#inscription">M'inscrire</a>
+    <a href="#retrait">Retrait</a>
+  </div>
+  <div style="font-size:.8rem;color:var(--muted)"><span class="status-dot"></span>En ligne</div>
+</nav>
+
+<section class="hero">
+  <h1>Travaille en ligne.<br><span>Gagne depuis l'Afrique.</span></h1>
+  <p>SAM est une IA qui recherche automatiquement les meilleures missions freelance et te notifie dès qu'une opportunité correspond à ton profil.</p>
+  <div class="hero-btns">
+    <a href="#inscription" class="btn btn-primary">Créer mon profil gratuit</a>
+    <a href="#missions" class="btn btn-outline">Voir les missions</a>
+  </div>
+</section>
+
+<div class="stats" id="stats-section">
+  <div class="stat-card"><div class="num" id="stat-missions">—</div><div class="label">Missions disponibles</div></div>
+  <div class="stat-card"><div class="num">2</div><div class="label">Plateformes surveillées</div></div>
+  <div class="stat-card"><div class="num">6h</div><div class="label">Fréquence de mise à jour</div></div>
+  <div class="stat-card"><div class="num" id="stat-users">—</div><div class="label">Membres actifs</div></div>
+</div>
+
+<section class="section" id="missions">
+  <div class="section-title">Missions disponibles</div>
+  <div id="missions-container" class="missions-grid">
+    <div class="loading"><div class="spinner"></div>Chargement des missions...</div>
+  </div>
+</section>
+
+<section class="section" id="inscription">
+  <div class="section-title">Créer mon profil SAM</div>
+  <div class="inscription-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nom complet</label>
+        <input type="text" id="f-nom" placeholder="Ex: Amany Auguste">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="f-email" placeholder="ton@email.com">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Pays</label>
+        <select id="f-pays">
+          <option>Bénin</option><option>Côte d'Ivoire</option><option>Sénégal</option>
+          <option>Mali</option><option>Burkina Faso</option><option>Togo</option>
+          <option>Niger</option><option>Cameroun</option><option>RDC</option><option>Autre</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Niveau</label>
+        <select id="f-niveau">
+          <option>Débutant</option><option>Intermédiaire</option><option>Avancé</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Langues parlées</label>
+      <input type="text" id="f-langues" placeholder="Ex: Français, Anglais, Mandarin" value="Français">
+    </div>
+    <div class="form-group">
+      <label>Compétences</label>
+      <input type="text" id="f-competences" placeholder="Ex: Traduction, Annotation IA, Rédaction, Design...">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Heures disponibles/semaine</label>
+        <input type="number" id="f-dispo" value="20" min="1" max="60">
+      </div>
+      <div class="form-group">
+        <label>Telegram ID (optionnel)</label>
+        <input type="text" id="f-telegram" placeholder="@tonpseudo">
+      </div>
+    </div>
+    <button class="btn btn-primary" style="width:100%" onclick="inscrire()">Créer mon profil SAM</button>
+    <div class="success-msg" id="success-msg"></div>
+  </div>
+</section>
+
+<section class="section" id="retrait">
+  <div class="section-title">Comment retirer mon argent</div>
+  <div class="retrait-section" id="retrait-container">
+    <div class="loading"><div class="spinner"></div>Chargement...</div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>SAM IA</strong> — Smart African Money · Développé à Cotonou, Bénin 🇧🇯</p>
+  <p style="margin-top:.5rem">Plateforme autonome de recherche de missions en ligne pour l'Afrique</p>
+</footer>
+
+<script>
+const API = '';
+
+async function chargerMissions() {
+  try {
+    const r = await fetch(API + '/api/missions');
+    const missions = await r.json();
+    document.getElementById('stat-missions').textContent = missions.length;
+    const container = document.getElementById('missions-container');
+    if (!missions.length) {
+      container.innerHTML = '<div class="loading">Aucune mission en base. Lance une synchronisation via /api/missions/sync</div>';
+      return;
+    }
+    container.innerHTML = missions.slice(0, 10).map(m => `
+      <div class="mission-card">
+        <div class="mission-info">
+          <h3>${m.titre}</h3>
+          <p>${(m.description || '').substring(0, 120)}${m.description && m.description.length > 120 ? '...' : ''}</p>
+          <div class="mission-meta">
+            <span class="tag tag-platform">${m.plateforme}</span>
+            <span class="tag tag-pay">${m.remuneration || 'Rémunération variable'}</span>
+            <span class="tag tag-lang">${m.langue || 'Toutes langues'}</span>
+          </div>
+        </div>
+        <div class="score-badge">
+          <div class="score">✓</div>
+          <div class="slabel">Disponible</div>
+        </div>
+      </div>
+    `).join('');
+  } catch(e) {
+    document.getElementById('missions-container').innerHTML = '<div class="loading">Connexion à l\'API en cours... Lance le serveur Flask.</div>';
+  }
+}
+
+async function chargerRetrait() {
+  try {
+    const r = await fetch(API + '/api/retrait/comparaison');
+    const methodes = await r.json();
+    const container = document.getElementById('retrait-container');
+    const icons = { paypal_wise_momo: '💳', usdt_binance: '🔐', wave: '⚡' };
+    container.innerHTML = methodes.map(m => `
+      <div class="retrait-card">
+        <h3>${icons[m.cle] || '💰'} ${m.methode}</h3>
+        <div class="meta">
+          <span>Délai: <strong>${m.delai}</strong></span>
+          <span>Frais: <strong>${m.frais}</strong></span>
+          <span>Min: <strong>${m.minimum}</strong></span>
+        </div>
+        <button class="btn btn-outline" style="width:100%;font-size:.8rem;padding:.5rem" onclick="voirGuide('${m.cle}')">Voir le guide étape par étape</button>
+      </div>
+    `).join('');
+  } catch(e) {
+    document.getElementById('retrait-container').innerHTML = '<div class="loading">Chargement du guide retrait...</div>';
+  }
+}
+
+async function voirGuide(methode) {
+  try {
+    const r = await fetch(API + `/api/retrait/guide/${methode}`);
+    const guide = await r.json();
+    const etapes = (guide.etapes || []).map(e => `<li data-n="${e.num}">${e.titre} — ${e.detail}</li>`).join('');
+    alert(`${guide.nom}\n\nDélai: ${guide.delai} · Frais: ${guide.frais_estimes}\n\nÉtapes:\n${(guide.etapes||[]).map(e=>`${e.num}. ${e.titre}: ${e.detail}`).join('\n\n')}`);
+  } catch(e) {}
+}
+
+async function inscrire() {
+  const data = {
+    nom: document.getElementById('f-nom').value.trim(),
+    email: document.getElementById('f-email').value.trim(),
+    pays: document.getElementById('f-pays').value,
+    niveau: document.getElementById('f-niveau').value,
+    langues: document.getElementById('f-langues').value.trim(),
+    competences: document.getElementById('f-competences').value.trim(),
+    disponibilite: parseInt(document.getElementById('f-dispo').value) || 20,
+    telegram_id: document.getElementById('f-telegram').value.trim(),
+  };
+  if (!data.nom || !data.email) { alert('Nom et email requis.'); return; }
+  try {
+    const r = await fetch(API + '/api/utilisateurs', {
+      method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data)
+    });
+    const res = await r.json();
+    const msg = document.getElementById('success-msg');
+    msg.style.display = 'block';
+    if (r.status === 201) {
+      msg.textContent = `✅ Profil créé ! SAM va maintenant trouver des missions pour ${data.nom}. Connecte-toi à notre bot Telegram pour les notifications.`;
+    } else {
+      msg.textContent = res.erreur || 'Une erreur est survenue.';
+      msg.style.color = '#ef4444';
+    }
+  } catch(e) {
+    document.getElementById('success-msg').textContent = '⚠️ Serveur indisponible. Lance python -m api.app.';
+    document.getElementById('success-msg').style.display = 'block';
+  }
+}
+
+chargerMissions();
+chargerRetrait();
+</script>
+</body>
+</html>
